@@ -1,3 +1,7 @@
 ***** 
 
 Basic knowledge for JavaScript required
+
+***** 
+
+npx playwright test 
