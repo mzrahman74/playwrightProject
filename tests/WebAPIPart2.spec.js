@@ -3,6 +3,7 @@
  * test browser -> .json, cart-order, orderdetails, orderhistory
  */
 const { test, expect } = require("@playwright/test");
+let webContext;
 
 test.beforeAll(async ({ browser }) => {
   const context = await browser.newContext();
@@ -14,12 +15,16 @@ test.beforeAll(async ({ browser }) => {
   await page.locator("input#login").click();
   await page.waitForLoadState("networkidle");
   await context.storageState({ path: "state.json" });
-  await browser.newContext({stora})
+  await browser.newContext({ storageState: "state.json" });
+  webContext = await browser.newContext({ storageState: "state.json" });
 });
 
-test("Browser context-validing error loging", async ({ page }) => {
+test("Browser context-validing error loging", async () => {
+  const page = await webContext.newPage();
+  await page.goto("https://rahulshettyacademy.com/client");
   const products = page.locator(".card-body");
   const cardTitle = page.locator(".card-body b");
+
   const email = "mrahmanz@yahoo.com";
   const india = " Country - India ";
   const productName = "adidas original";
@@ -74,4 +79,15 @@ test("Browser context-validing error loging", async ({ page }) => {
   }
   const orderDetail = await page.locator("div.col-text").textContent();
   expect(orderId.includes(orderDetail)).toBeTruthy();
+});
+
+test("test case 2", async () => {
+  const page = await webContext.newPage();
+  await page.goto("https://rahulshettyacademy.com/client");
+  const products = page.locator(".card-body");
+  const cardTitle = page.locator(".card-body b");
+  console.log(await cardTitle.first().textContent());
+  console.log(await cardTitle.nth(2).textContent());
+  const AllTitles = await page.locator(".card-body b").allTextContents();
+  console.log(AllTitles);
 });
