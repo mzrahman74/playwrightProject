@@ -1,9 +1,9 @@
-class LoginPge {
+class LoginPage {
   constructor(page) {
     this.page = page;
     this.signInbutton = page.locator("input#login");
-    this.userName = page.locator("#userEmail").fill(email);
-    this.password = page.locator("#userPassword").type("Psqrt1965?");
+    this.userName = page.locator("#userEmail");
+    this.password = page.locator("#userPassword");
   }
   async goTo() {
     await this.page.goto("https://rahulshettyacademy.com/client");
@@ -16,4 +16,4 @@ class LoginPge {
   }
 }
 
-module.export = { LoginPge };
+module.exports = { LoginPage };
