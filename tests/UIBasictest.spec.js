@@ -3,10 +3,13 @@ const { test, expect } = require("@playwright/test");
 test("First playwright test", async ({ browser }) => {
   const context = await browser.newContext();
   const page = await context.newPage();
+  //page.route("**/*.{jpg,png,jpg}", route => route.abort());
   const userName = page.locator("#username");
   const password = page.locator("[type='password']");
   const signIn = page.locator("#signInBtn");
   const cardTitles = page.locator(".card-body a");
+  page.on("request", request => console.log(request.url()));
+  page.on("response", response => console.log(response.url(), response.status()));
   await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
   console.log(await page.title());
   await expect(page).toHaveTitle("LoginPage Practise | Rahul Shetty Academy");
@@ -75,6 +78,7 @@ test("Child windows open", async ({ browser }) => {
   const domain = arrayText[1].split(" ")[0];
   console.log(text);
   console.log(domain);
+  //await page.pause();
   await userName.type(domain);
   console.log(await userName.textContent());
 });

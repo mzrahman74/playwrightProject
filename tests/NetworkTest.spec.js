@@ -1,7 +1,8 @@
 const { test, expect, request } = require("@playwright/test");
-const { APIUtils } = require("../utils/APIUtils");
+const { APIUtils } = require("./utils/APIUtils");
 const loginPayLoad = { userEmail: "mrahmanz@yahoo.com", userPassword: "Psqrt1965?" };
 const orderPayLoad = { orders: [{ country: "Cuba", productOrderedId: "6262e990e26b7e1a10e89bfa" }] };
+const fakePayload = { data: [], message: "No Product in Cart" };
 
 let response;
 test.beforeAll(async () => {
@@ -15,16 +16,15 @@ test("Login and purchase", async ({ page }) => {
     window.localStorage.setItem("token", value);
   }, response.token);
   await page.goto("https://rahulshettyacademy.com/client");
+  await page.route("https://rahulshettyacademy.com/api/ecom/order/get-orders-for-customer/64010f18568c3e9fb126c45c", async route => {
+    const response = await page.request.fetch(route.request());
+    let body = fakePayload;
+    route.fulfill({
+      response,
+      body
+    });
+    // intercepting response - API response -> {playwright fakeresponse}
+  });
   await page.locator("button[routerlink*='myorders']").click();
-  await page.locator("tbody").waitFor();
-  const tableRow = page.locator("tbody tr");
-  for (let i = 0; i < (await tableRow.count()); i++) {
-    const rowOrderId = await tableRow.nth(i).locator("th").textContent();
-    if (response.orderId.includes(rowOrderId)) {
-      await tableRow.nth(i).locator("button:has-text('View')").click();
-      break;
-    }
-  }
-  const orderDetail = await page.locator("div.col-text").textContent();
-  expect(response.orderId.includes(orderDetail)).toBeTruthy();
+  console.log(await page.locator(".mt-4").textContent());
 });

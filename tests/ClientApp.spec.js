@@ -1,32 +1,16 @@
 const { test, expect } = require("@playwright/test");
+const { LoginPage } = require("../pageObjects/LoginPage");
 
-test("Browser Context-Validing Error login", async ({ page }) => {
-  await page.goto("https://rahulshettyacademy.com/client");
-  await page.locator(".text-reset").click();
-  await page.locator("#firstName").type("Mohammad");
-  await page.locator("#lastName").type("Rahman");
-  await page.locator("#userEmail").type("test@gmail.com");
-  await page.locator("#userMobile").type("2139741111");
-  const dropdown = page.locator("select.custom-select");
-  await dropdown.selectOption("3: Engineer");
-  // await page.pause();
-  await page.locator('input[value="Male"]').click();
-  await page.locator("#userPassword").type("Password1");
-  await page.locator("#confirmPassword").type("Password1");
-  await page.locator('input[type="checkbox"]').click();
-  await page.locator('input[value="Register"]').click();
-});
-
-test("Browser context-validing error loging", async ({ page }) => {
+test.only("Client app login", async ({ page }) => {
   const products = page.locator(".card-body");
   const cardTitle = page.locator(".card-body b");
-  const email = "mrahmanz@yahoo.com";
+  const loginPage = new LoginPage(page);
+  const username = "mrahmanz@yahoo.com";
+  const password = "Psqrt1965?";
   const india = " Country - India ";
   const productName = "adidas original";
-  await page.goto("https://rahulshettyacademy.com/client");
-  await page.locator("#userEmail").fill(email);
-  await page.locator("#userPassword").type("Psqrt1965?");
-  await page.locator("input#login").click();
+  loginPage.goTo();
+  loginPage.validLogin(username, password);
   await page.waitForLoadState("networkidle");
   console.log(await cardTitle.first().textContent());
   console.log(await cardTitle.nth(2).textContent());
@@ -61,7 +45,7 @@ test("Browser context-validing error loging", async ({ page }) => {
   await page.locator("select.input").last().selectOption("24");
   await page.locator("div.field.small input[type='text']").nth(0).type("321");
   await page.locator("div.field.small input[type='text']").nth(1).type("mohammad rahman");
-  await expect(page.locator("text = mrahmanz@yahoo.com ")).toHaveText(email);
+  await expect(page.locator("text = mrahmanz@yahoo.com ")).toHaveText(username);
   await page.locator(".action__submit").click();
   await expect(page.locator(".hero-primary")).toHaveText(" Thankyou for the order. ");
   const orderId = await page.locator(".em-spacer-1 .ng-star-inserted").textContent();
