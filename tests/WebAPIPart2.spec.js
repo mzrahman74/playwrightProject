@@ -19,7 +19,7 @@ test.beforeAll(async ({ browser }) => {
   webContext = await browser.newContext({ storageState: "state.json" });
 });
 
-test("Browser context-validing error loging", async () => {
+test("@API Browser context-validing error loging", async () => {
   const page = await webContext.newPage();
   await page.goto("https://rahulshettyacademy.com/client");
   const products = page.locator(".card-body");
@@ -81,7 +81,7 @@ test("Browser context-validing error loging", async () => {
   expect(orderId.includes(orderDetail)).toBeTruthy();
 });
 
-test("test case 2", async () => {
+test("@API test case 2", async () => {
   const page = await webContext.newPage();
   await page.goto("https://rahulshettyacademy.com/client");
   const products = page.locator(".card-body");

@@ -2,3 +2,9 @@ node_modules/
 /test-results/
 /playwright-report/
 /playwright/.cache/
+partialScreenshot.png
+screenshot.png
+tests/MoreValidations.spec.js-snapshots/landing-darwin.png
+tests/MoreValidations.spec.js-snapshots/landing-firefox-darwin.png
+tests/MoreValidations.spec.js-snapshots/landing-webkit-darwin.png
+
