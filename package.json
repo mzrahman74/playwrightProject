@@ -3,7 +3,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npx playwright test tests/WebAPIPart1.spec.js --headed"
+    "test": "npx playwright test tests/WebAPIPart1.spec.js --headed",
+    "regression": "npx playwright test",
+    "webTests": "npx playwright test --grep @web",
+    "APITests": "npx playwright test --grep @API",
+    "SafariNewConfig": "npx playwright test --config playwright.config.js --project=chrome"
   },
   "keywords": [],
   "author": "",
@@ -11,5 +15,8 @@
   "devDependencies": {
     "@playwright/test": "^1.40.1",
     "playwright": "^1.40.1"
+  },
+  "dependencies": {
+    "@cucumber/cucumber": "^10.3.1"
   }
 }
