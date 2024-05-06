@@ -37,7 +37,7 @@ test("Page playwright test", async ({ page }) => {
   await expect(page).toHaveTitle("Google");
 });
 
-test("Ally application lauch", async ({ page }) => {
+test("Ally application launch", async ({ page }) => {
   await page.goto("https://alle.com");
   console.log(await page.title());
   await expect(page).toHaveTitle("Allē - A loyalty program uniquely designed for you.");

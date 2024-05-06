@@ -13,7 +13,7 @@ const { defineConfig, devices } = require("@playwright/test");
 module.exports = defineConfig({
   testDir: "./tests",
   /* Maximum time one test can run for. */
-  timeout: 60 * 1000,
+  timeout: 70 * 1000,
   expect: {
     /**
      * Maximum time expect() should wait for the condition to be met.
@@ -32,10 +32,36 @@ module.exports = defineConfig({
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: "html",
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
-  use: {
-    browserName: "chromium",
-    use: { name: "chromium", headless: true, screenshot: "on", trace: "retain-on-failure" }
-  }
+  projects: [
+    {
+      name: "safari",
+      use: {
+        browserName: "webkit",
+        headless: false,
+        screenshot: "on",
+        trace: "on",
+        ignoreHTTPSErrors: true,
+        permissions: ["geolocation"],
+        ...devices["iphone 11"]
+      }
+    },
+    {
+      name: "chrome execution",
+      use: {
+        browserName: "chromium",
+        use: { name: "chromium", headless: true, screenshot: "on", trace: "retain-on-failure" }
+      }
+    },
+    {
+      name: "firefox execution",
+      use: {
+        browserName: "firefox",
+        headless: true,
+        screenshot: "on",
+        trace: "on"
+      }
+    }
+  ]
 
   /* Configure projects for major browsers */
 
