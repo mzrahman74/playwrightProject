@@ -1,7 +1,7 @@
 const { test, expect } = require("@playwright/test");
 const { LoginPage } = require("../pageObjects/LoginPage");
 
-test.only("Client app login", async ({ page }) => {
+test("Client app login", async ({ page }) => {
   const products = page.locator(".card-body");
   const cardTitle = page.locator(".card-body b");
   const loginPage = new LoginPage(page);
