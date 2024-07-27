@@ -17,7 +17,7 @@ export class OrdersHistoryPage {
     await this.ordersTable.waitFor();
     const tableRow: any = this.rows;
     for (let i = 0; i < (await tableRow.count()); i++) {
-      const rowOrderId = await tableRow.nth(i).locator("th").textContent();
+      const rowOrderId: any = await tableRow.nth(i).locator("th").textContent();
       if (orderId.includes(rowOrderId)) {
         await tableRow.nth(i).this.ordersView.click();
         break;
